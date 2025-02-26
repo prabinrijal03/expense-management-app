@@ -1,3 +1,5 @@
+import 'package:expense_management_app/presentation/bloc/auth_bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:expense_management_app/data/repositories/auth_repository_impl.dart';
@@ -27,4 +29,12 @@ abstract class RegisterModule {
   @singleton
   SignInUseCase provideSignInUseCase(AuthRepository repo) =>
       SignInUseCase(repo);
+
+@singleton
+  SignOutUseCase provideSignOutUseCase(AuthRepository repo) =>
+      SignOutUseCase(repo);
+
+  @factory
+  AuthBloc provideAuthBloc(SignUpUseCase signUpUseCase, SignInUseCase signInUseCase, SignOutUseCase signOutUseCase) =>
+      AuthBloc(signUpUseCase, signInUseCase, signOutUseCase);
 }

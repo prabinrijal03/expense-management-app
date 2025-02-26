@@ -1,3 +1,4 @@
+import 'package:expense_management_app/presentation/pages/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,24 +14,59 @@ class AuthPage extends StatelessWidget {
       create: (context) => getIt<AuthBloc>(),
       child: Scaffold(
         appBar: AppBar(title: const Text('Role-Based Authentication')),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () => _navigateTo(context, 'admin'),
-                child: const Text('Login as Admin'),
+        body: BlocConsumer<AuthBloc, AuthState>(
+          listener: (context, state) {
+            state.when(
+                initial: () {},
+                loading: () => const CircularProgressIndicator(),
+                authenticated: (user) {
+                  user.role == 'admin'
+                      ? AdminPage()
+                      : print("this is ${user.role}");
+                },
+                unauthenticated: () {
+                  print("error user credentials");
+                },
+                error: (message) {
+                  print(message);
+                });
+          },
+          builder: (context, state) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextField(
+                      decoration: const InputDecoration(labelText: 'Email')),
+                  TextField(
+                      decoration: const InputDecoration(labelText: 'Password'),
+                      obscureText: true),
+                  ElevatedButton(
+                    onPressed: () {
+                      BlocProvider.of<AuthBloc>(context).add(AuthEvent.signUp(
+                          email: 'tes1t@gmail.com',
+                          password: "12345678",
+                          role: "user"));
+                    },
+                    child: const Text('Register as Admin'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      BlocProvider.of<AuthBloc>(context).add(AuthEvent.signIn(
+                        email: 'test@gmail.com',
+                        password: "12345678",
+                      ));
+                    },
+                    child: const Text('Login as Manager'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => _navigateTo(context, 'employee'),
+                    child: const Text('Login as Employee'),
+                  ),
+                ],
               ),
-              ElevatedButton(
-                onPressed: () => _navigateTo(context, 'manager'),
-                child: const Text('Login as Manager'),
-              ),
-              ElevatedButton(
-                onPressed: () => _navigateTo(context, 'employee'),
-                child: const Text('Login as Employee'),
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
@@ -60,11 +96,14 @@ class LoginPage extends StatelessWidget {
         child: Column(
           children: [
             TextField(decoration: const InputDecoration(labelText: 'Email')),
-            TextField(decoration: const InputDecoration(labelText: 'Password'), obscureText: true),
-            ElevatedButton(
-              onPressed: () => bloc.add(AuthEvent.signIn('test@example.com', 'password')),
-              child: const Text('Login'),
-            ),
+            TextField(
+                decoration: const InputDecoration(labelText: 'Password'),
+                obscureText: true),
+            // ElevatedButton(
+            //   onPressed: () =>
+            //       bloc.add(AuthEvent.signIn('test@example.com', 'password')),
+            //   child: const Text('Login'),
+            // ),
           ],
         ),
       ),

@@ -5,7 +5,6 @@ import 'package:hive_flutter/adapters.dart';
 import 'core/dependency_injection/dependency_injection.dart';
 import 'presentation/pages/auth_page/auth_page.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -20,8 +19,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Expense Manager',
-      home: AuthPage(), 
+      home: AuthPage(),
     );
   }
 }

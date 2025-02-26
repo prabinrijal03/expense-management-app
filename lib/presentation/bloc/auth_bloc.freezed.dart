@@ -110,15 +110,15 @@ class __$$SignUpImplCopyWithImpl<$Res>
     Object? role = null,
   }) {
     return _then(_$SignUpImpl(
-      null == email
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      null == password
+      password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      null == role
+      role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
@@ -129,7 +129,8 @@ class __$$SignUpImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SignUpImpl implements _SignUp {
-  const _$SignUpImpl(this.email, this.password, this.role);
+  const _$SignUpImpl(
+      {required this.email, required this.password, required this.role});
 
   @override
   final String email;
@@ -237,8 +238,9 @@ class _$SignUpImpl implements _SignUp {
 
 abstract class _SignUp implements AuthEvent {
   const factory _SignUp(
-          final String email, final String password, final String role) =
-      _$SignUpImpl;
+      {required final String email,
+      required final String password,
+      required final String role}) = _$SignUpImpl;
 
   String get email;
   String get password;
@@ -277,11 +279,11 @@ class __$$SignInImplCopyWithImpl<$Res>
     Object? password = null,
   }) {
     return _then(_$SignInImpl(
-      null == email
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      null == password
+      password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
@@ -292,7 +294,7 @@ class __$$SignInImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SignInImpl implements _SignIn {
-  const _$SignInImpl(this.email, this.password);
+  const _$SignInImpl({required this.email, required this.password});
 
   @override
   final String email;
@@ -396,8 +398,9 @@ class _$SignInImpl implements _SignIn {
 }
 
 abstract class _SignIn implements AuthEvent {
-  const factory _SignIn(final String email, final String password) =
-      _$SignInImpl;
+  const factory _SignIn(
+      {required final String email,
+      required final String password}) = _$SignInImpl;
 
   String get email;
   String get password;

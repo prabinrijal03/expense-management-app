@@ -13,6 +13,7 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../domain/repositories/repositories.dart' as _i688;
 import '../../domain/usecases/auth_usecase.dart' as _i856;
+import '../../presentation/bloc/auth_bloc.dart' as _i581;
 import 'dependency_injection.dart' as _i9;
 
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -33,6 +34,13 @@ _i174.GetIt $initGetIt(
       () => registerModule.provideSignUpUseCase(gh<_i688.AuthRepository>()));
   gh.singleton<_i856.SignInUseCase>(
       () => registerModule.provideSignInUseCase(gh<_i688.AuthRepository>()));
+  gh.singleton<_i856.SignOutUseCase>(
+      () => registerModule.provideSignOutUseCase(gh<_i688.AuthRepository>()));
+  gh.factory<_i581.AuthBloc>(() => registerModule.provideAuthBloc(
+        gh<_i856.SignUpUseCase>(),
+        gh<_i856.SignInUseCase>(),
+        gh<_i856.SignOutUseCase>(),
+      ));
   return getIt;
 }
 
