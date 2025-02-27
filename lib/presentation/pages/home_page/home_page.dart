@@ -1,63 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:expense_management_app/presentation/bloc/auth_bloc.dart';
 
-class AdminPage extends StatelessWidget {
-  const AdminPage({super.key});
+import '../../../domain/entities/user.dart';
+import 'admin_dashboard.dart';
+import 'employee_dashboard.dart';
+import 'manager_dashboard.dart';
+
+class HomePage extends StatelessWidget {
+  final UserEntity user;
+
+  const HomePage({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Admin Dashboard'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () => context.read<AuthBloc>().add(const AuthEvent.signOut()),
-          ),
-        ],
+        title: Text('${user.role} Dashboard'),
+        actions: [/* Logout button */],
       ),
-      body: const Center(child: Text('Admin Content')),
+      body: _buildRoleSpecificUI(),
     );
   }
-}
 
-class ManagerPage extends StatelessWidget {
-  const ManagerPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Manager Dashboard'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () => context.read<AuthBloc>().add(const AuthEvent.signOut()),
-          ),
-        ],
-      ),
-      body: const Center(child: Text('Manager Content')),
-    );
-  }
-}
-
-class UserPage extends StatelessWidget {
-  const UserPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('User Dashboard'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () => context.read<AuthBloc>().add(const AuthEvent.signOut()),
-          ),
-        ],
-      ),
-      body: const Center(child: Text('User Content')),
-    );
+  Widget _buildRoleSpecificUI() {
+    switch (user.role) {
+      case 'admin':
+        return const AdminDashboard();
+      case 'manager':
+        return const ManagerDashboard();
+      default:
+        return const EmployeeDashboard();
+    }
   }
 }

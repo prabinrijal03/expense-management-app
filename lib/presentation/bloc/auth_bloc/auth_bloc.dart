@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../domain/entities/user.dart';
-import '../../domain/usecases/auth_usecase.dart';
+import '../../../domain/entities/user.dart';
+import '../../../domain/usecases/auth_usecase.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -21,7 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           SignUpParams(event.email, event.password, event.role));
 
       if (user != null) {
-        emit(AuthState.authenticated(user));
+        emit(AuthState.registered(user));
       } else {
         emit(const AuthState.error("Signup Failed"));
       }

@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../domain/entities/expense_entity.dart';
+
 part 'expense_model.freezed.dart';
 part 'expense_model.g.dart';
 
 @freezed
-class ExpenseModel with _$ExpenseModel {
+class ExpenseModel with _$ExpenseModel implements ExpenseEntity {
   factory ExpenseModel({
     required String id,
     required String userId,

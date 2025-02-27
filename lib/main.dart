@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import 'core/dependency_injection/dependency_injection.dart';
+import 'data/models/user_model/user_model.dart';
 import 'presentation/pages/auth_page/auth_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Hive.initFlutter();
+  Hive.registerAdapter(UserModelAdapter());
   configureDependencies();
   runApp(const MyApp());
 }
