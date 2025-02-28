@@ -16,7 +16,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       : super(const AuthState.initial()) {
     on<_SignUp>((event, emit) async {
       emit(const AuthState.loading());
-
       final user = await signUpUseCase(
           SignUpParams(event.email, event.password, event.role));
 
@@ -29,10 +28,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     on<_SignIn>((event, emit) async {
       emit(const AuthState.loading());
-
       final user =
           await signInUseCase(SignInParams(event.email, event.password));
-
       if (user != null) {
         emit(AuthState.authenticated(user));
       } else {

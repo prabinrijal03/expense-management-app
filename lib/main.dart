@@ -1,10 +1,10 @@
+import 'package:expense_management_app/presentation/pages/auth_page/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import 'core/dependency_injection/dependency_injection.dart';
 import 'data/models/user_model/user_model.dart';
-import 'presentation/pages/auth_page/auth_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,6 +12,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(UserModelAdapter());
   configureDependencies();
+   
   runApp(const MyApp());
 }
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Expense Manager',
-      home: AuthPage(),
+      home: LoginPage(),
     );
   }
 }

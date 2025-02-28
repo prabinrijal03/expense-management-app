@@ -1,3 +1,4 @@
+import 'package:expense_management_app/presentation/pages/auth_page/login_page.dart';
 import 'package:expense_management_app/presentation/pages/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,11 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/dependency_injection/dependency_injection.dart';
 import '../../bloc/auth_bloc/auth_bloc.dart';
 
-class AuthPage extends StatelessWidget {
-  AuthPage({super.key});
+class RegisterPage extends StatelessWidget {
+  RegisterPage({super.key});
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
   String selectedRole = 'employee';
 
   @override
@@ -27,14 +29,11 @@ class AuthPage extends StatelessWidget {
                     const Center(child: CircularProgressIndicator()),
               ),
               registered: (user) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return LoginPage();
+                }));
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Registered as ${user.role}')),
-                );
-              },
-              authenticated: (user) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomePage(user: user)),
                 );
               },
               error: (message) {
@@ -69,15 +68,6 @@ class AuthPage extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () => _handleSignUp(context),
                     child: const Text('Register'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      BlocProvider.of<AuthBloc>(context).add(AuthEvent.signIn(
-                        email: emailController.text,
-                        password: passwordController.text,
-                      ));
-                    },
-                    child: const Text('Login'),
                   ),
                 ],
               ),

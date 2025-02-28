@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/dependency_injection/dependency_injection.dart';
 import '../../bloc/bloc/expense_bloc.dart';
 
 class AdminDashboard extends StatelessWidget {
@@ -9,16 +10,20 @@ class AdminDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ExpenseBloc, ExpenseState>(
-      builder: (context, state) {
-        return Column(
-          children: [
-            _buildSummaryCards(context),
-            Expanded(child: _buildExpenseChart(context)),
-            Expanded(child: _buildExpenseList(context)),
-          ],
-        );
-      },
+    
+    return BlocProvider(
+      create: (context) => getIt<ExpenseBloc>(),
+      child: BlocBuilder<ExpenseBloc, ExpenseState>(
+        builder: (context, state) {
+          return Column(
+            children: [
+              _buildSummaryCards(context),
+              Expanded(child: _buildExpenseChart(context)),
+              Expanded(child: _buildExpenseList(context)),
+            ],
+          );
+        },
+      ),
     );
   }
 
